@@ -41,6 +41,14 @@ const argv = yargs.options({
     conflicts: 'uri',
     array: true,
   },
+  username: {
+    type: 'string',
+    describe: 'username',
+  },
+  password: {
+    type: 'string',
+    describe: 'password',
+  },
 }).argv
 
 if (!(argv.uri || argv.host)) {
@@ -55,6 +63,10 @@ const config = {
     uri: argv.uri,
     hostname: argv.host,
     parameters: argv.vapix,
+  },
+  auth: {
+    username: argv.username,
+    password: argv.password,
   },
 }
 

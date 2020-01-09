@@ -1,3 +1,5 @@
+import debug from 'debug'
+
 import { merge } from '../../utils/config'
 import { statusCode } from '../../utils/protocols/rtsp'
 import { Tube } from '../component'
@@ -57,6 +59,7 @@ export class Auth extends Tube {
         msg.type === MessageType.RTSP &&
         statusCode(msg.data) === UNAUTHORIZED
       ) {
+        debug('msl:auth:incoming')(`${msg.data}`)
         const headers = msg.data.toString().split('\n')
         const wwwAuth = headers.find(header => /WWW-Auth/i.test(header))
         if (wwwAuth === undefined) {

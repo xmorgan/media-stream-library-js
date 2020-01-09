@@ -25,6 +25,7 @@
     "rtsp": "rtsp-ws-server/start.sh",
     "dev": "webpack --mode development --watch",
     "examples": "webpack --mode development && http-server examples/browser",
+    "live": "node examples/node/player.js",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "release": "yarn version --new-version `node node_modules/.bin/conventional-recommended-bump -p angular`"
   },
