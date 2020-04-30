@@ -3,7 +3,7 @@ import { Sdp } from '../utils/protocols/sdp'
 export interface GenericMessage {
   readonly type: MessageType
   readonly data: Buffer
-  ntpTimestamp?: number
+  readonly ntpTimestamp?: number
 }
 
 export enum MessageType {
@@ -37,7 +37,7 @@ export interface RtcpMessage extends GenericMessage {
 export interface RtspMessage extends GenericMessage {
   readonly type: MessageType.RTSP
   readonly method?: string
-  readonly headers?: { [key: string]: string }
+  readonly headers?: { readonly [key: string]: string }
   readonly uri?: string
   readonly protocol?: string
 }

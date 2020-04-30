@@ -6,10 +6,10 @@ import { WSSource } from '../components/ws-source'
 import { AuthConfig, Auth } from '../components/auth'
 
 export interface Html5CanvasConfig {
-  ws?: WSConfig
-  rtsp?: RtspConfig
-  mediaElement: HTMLCanvasElement
-  auth?: AuthConfig
+  readonly ws?: WSConfig
+  readonly rtsp?: RtspConfig
+  readonly mediaElement: HTMLCanvasElement
+  readonly auth?: AuthConfig
 }
 
 /**
@@ -34,7 +34,7 @@ export class Html5CanvasPipeline extends RtspMjpegPipeline {
   public ready: Promise<void>
 
   private _src?: WSSource
-  private _sink: CanvasSink
+  private readonly _sink: CanvasSink
 
   /**
    * Creates an instance of Html5CanvasPipeline.

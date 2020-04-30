@@ -24,7 +24,7 @@ export class Mp4Muxer extends Tube {
     }
     const incoming = new Transform({
       objectMode: true,
-      transform: function (msg: Message, encoding, callback) {
+      transform (msg: Message, encoding, callback) {
         if (msg.type === MessageType.SDP) {
           /**
            * Arrival of SDP signals the beginning of a new movie.

@@ -216,7 +216,7 @@ describe('session', () => {
     test('should emit 4 commands in a given sequence', (done) => {
       const s = new RtspSession({ uri: 'rtsp://whatever/path' })
       let calls = 0
-      const methods: RTSP_METHOD[] = []
+      const methods: Array<RTSP_METHOD> = []
       s.outgoing.on('data', (req) => {
         if (req.type !== MessageType.RTSP) {
           return

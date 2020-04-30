@@ -4,12 +4,12 @@ import { merge } from '../../utils/config'
 const WEBSOCKET_TIMEOUT = 10007
 
 export interface WSConfig {
-  host?: string
-  scheme?: string
-  uri?: string
-  tokenUri?: string
-  protocol?: string
-  timeout?: number
+  readonly host?: string
+  readonly scheme?: string
+  readonly uri?: string
+  readonly tokenUri?: string
+  readonly protocol?: string
+  readonly timeout?: number
 }
 
 // Default configuration

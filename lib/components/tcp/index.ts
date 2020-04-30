@@ -17,7 +17,7 @@ export class TcpSource extends Source {
      */
     const incoming = new Readable({
       objectMode: true,
-      read: function () {
+      read () {
         //
       },
     })
@@ -28,7 +28,7 @@ export class TcpSource extends Source {
      */
     const outgoing = new Writable({
       objectMode: true,
-      write: function (msg, encoding, callback) {
+      write (msg, encoding, callback) {
         const b = msg.data
 
         if (!socket) {

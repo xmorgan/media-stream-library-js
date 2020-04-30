@@ -34,7 +34,7 @@ const MOCK_NOT_MOVIE = ['', ''].map((type) => {
   }
 })
 
-const copySpies = (type: MessageType, messages: GenericMessage[]) => {
+const copySpies = (type: MessageType, messages: ReadonlyArray<GenericMessage>) => {
   return messages
     .filter((msg) => msg.type === type)
     .map((msg) => jest.spyOn(msg.data, 'copy'))
@@ -45,8 +45,8 @@ const copySpies = (type: MessageType, messages: GenericMessage[]) => {
  * @param  {Array} fragments Messages to send from source.
  * @return {Object} Components and function to start flow.
  */
-const pipelineFactory = (...fragments: GenericMessage[][]) => {
-  const sourceMessages = ([] as GenericMessage[]).concat(...fragments)
+const pipelineFactory = (...fragments: ReadonlyArray<ReadonlyArray<GenericMessage>>) => {
+  const sourceMessages = ([] as Array<GenericMessage>).concat(...fragments)
   const sinkHandler = jest.fn()
 
   const source = Source.fromMessages(sourceMessages)

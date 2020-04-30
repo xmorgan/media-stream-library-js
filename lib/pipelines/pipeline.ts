@@ -13,7 +13,7 @@ export class Pipeline {
    * connectedness.
    * @param {Array} components The components of the pipeline in order.
    */
-  constructor(...components: Component[]) {
+  constructor(...components: Array<Component>) {
     const [car, ...cdr] = components
 
     this._set = new Set(components)
@@ -24,7 +24,7 @@ export class Pipeline {
     }, car)
   }
 
-  init(...components: Component[]) {
+  init(...components: Array<Component>) {
     const [car, ...cdr] = components
 
     this._set = new Set(components)

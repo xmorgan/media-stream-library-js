@@ -30,7 +30,7 @@ export class WSSource extends Source {
      */
     const incoming = new Readable({
       objectMode: true,
-      read: function () {
+      read () {
         //
       },
     })
@@ -61,7 +61,7 @@ export class WSSource extends Source {
      */
     const outgoing = new Writable({
       objectMode: true,
-      write: function (msg, encoding, callback) {
+      write (msg, encoding, callback) {
         try {
           socket.send(msg.data)
         } catch (e) {

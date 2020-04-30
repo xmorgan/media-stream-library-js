@@ -13,9 +13,9 @@ const generateLogger = (prefix: string, type?: MessageType) => {
 
   if (type === undefined) {
     return log
-  } else {
+  } 
     return (msg: GenericMessage) => msg.type === type && log(msg)
-  }
+  
 }
 
 /**
@@ -32,7 +32,7 @@ export class Inspector extends Tube {
 
     const incoming = new Transform({
       objectMode: true,
-      transform: function (msg, encoding, callback) {
+      transform (msg, encoding, callback) {
         incomingLogger(msg)
         callback(undefined, msg)
       },
@@ -42,7 +42,7 @@ export class Inspector extends Tube {
 
     const outgoing = new Transform({
       objectMode: true,
-      transform: function (msg, encoding, callback) {
+      transform (msg, encoding, callback) {
         outgoingLogger(msg)
         callback(undefined, msg)
       },

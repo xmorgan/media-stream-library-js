@@ -6,18 +6,18 @@ import { packetType, BYE } from '../../utils/protocols/rtcp'
 const TRIGGER_THRESHOLD = 100
 
 export interface MediaTrack {
-  type: string
-  encoding?: string
-  mime?: string
-  codec?: any
+  readonly type: string
+  readonly encoding?: string
+  readonly mime?: string
+  readonly codec?: any
 }
 
 export class MseSink extends Sink {
-  private _videoEl: HTMLVideoElement
+  private readonly _videoEl: HTMLVideoElement
   private _done?: () => void
   private _lastCheckpointTime: number
 
-  public onSourceOpen?: (mse: MediaSource, tracks: MediaTrack[]) => void
+  public onSourceOpen?: (mse: MediaSource, tracks: Array<MediaTrack>) => void
 
   /**
    * Create a Media component.
@@ -120,7 +120,7 @@ export class MseSink extends Sink {
      */
     const outgoing = new Readable({
       objectMode: true,
-      read: function () {
+      read () {
         //
       },
     })

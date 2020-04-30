@@ -10,7 +10,7 @@ import { MessageType } from '../message'
 
 describe('Parsing of interleaved data', () => {
   let parser: Parser
-  let messages: any[] = []
+  let messages: Array<any> = []
 
   beforeEach(() => {
     parser = new Parser()

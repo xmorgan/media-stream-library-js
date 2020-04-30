@@ -44,7 +44,7 @@ export class Source extends AbstractComponent {
    * @param {Array} messages List of objects (with data property) to emit.
    * @return {Component}
    */
-  public static fromMessages(messages: GenericMessage[]) {
+  public static fromMessages(messages: Array<GenericMessage>) {
     const component = new Source(
       StreamFactory.producer(messages),
       StreamFactory.consumer(),

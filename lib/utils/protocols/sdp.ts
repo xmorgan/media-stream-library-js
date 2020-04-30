@@ -3,9 +3,9 @@ import { NtpSeconds, seconds } from './ntp'
 
 interface ConnectionField {
   // c=<nettype> <addrtype> <connection-address>
-  networkType: 'IN'
-  addressType: 'IP4' | 'IP6'
-  connectionAddress: string
+  readonly networkType: 'IN'
+  readonly addressType: 'IP4' | 'IP6'
+  readonly connectionAddress: string
 }
 
 interface BandwidthField {
@@ -67,9 +67,9 @@ export interface SessionDescription extends RtspExtensions {
   // u=<uri>
   readonly uri?: string
   // e=<email-address>
-  readonly email?: string | string[]
+  readonly email?: string | ReadonlyArray<string>
   // p=<phone-number>
-  readonly phone?: string | string[]
+  readonly phone?: string | ReadonlyArray<string>
   // c=<nettype> <addrtype> <connection-address>
   readonly connection?: ConnectionField
   // b=<bwtype>:<bandwidth>
@@ -78,17 +78,17 @@ export interface SessionDescription extends RtspExtensions {
   readonly time: TimeDescription
   readonly repeatTimes?: RepeatTimeDescription
   // Zero or more media descriptions
-  readonly media: MediaDescription[]
+  readonly media: ReadonlyArray<MediaDescription>
 }
 
 interface OriginField {
   // o=<username> <sess-id> <sess-version> <nettype> <addrtype> <unicast-address>
-  username: string
-  sessionId: number
-  sessionVersion: number
-  networkType: 'IN'
-  addressType: 'IP4' | 'IP6'
-  address: string
+  readonly username: string
+  readonly sessionId: number
+  readonly sessionVersion: number
+  readonly networkType: 'IN'
+  readonly addressType: 'IP4' | 'IP6'
+  readonly address: string
 }
 
 /**
@@ -107,7 +107,7 @@ export interface RepeatTimeDescription {
   // r=<repeat interval> <active duration> <offsets from start-time>
   readonly repeatInterval: seconds
   readonly activeDuration: seconds
-  readonly offsets: seconds[]
+  readonly offsets: ReadonlyArray<seconds>
 }
 
 /**
@@ -147,21 +147,21 @@ export interface MediaDescription extends RtspExtensions {
   // a=fmtp:<format> <format specific parameters>
   readonly fmtp: {
     readonly format: string
-    readonly parameters: { [key: string]: any }
+    readonly parameters: { readonly [key: string]: any }
   }
   // Extra non-SDP properties
   // TODO: refactor this away
-  mime?: string
-  codec?: any
+  readonly mime?: string
+  readonly codec?: any
 }
 
 export interface VideoMedia extends MediaDescription {
   readonly type: 'video'
   readonly framerate?: number
   // Transformation matrix
-  readonly transform?: number[][]
+  readonly transform?: ReadonlyArray<ReadonlyArray<number>>
   // JPEG
-  readonly framesize?: [number, number]
+  readonly framesize?: readonly [number, number]
 }
 
 export interface H264Media extends VideoMedia {
@@ -206,14 +206,14 @@ export interface AACMedia extends AudioMedia {
 
 export interface Sdp {
   readonly session: SessionDescription
-  readonly media: MediaDescription[]
+  readonly media: ReadonlyArray<MediaDescription>
 }
 
 const extractLineVals = (buffer: Buffer, lineStart: string, start = 0) => {
   const anchor = `\n${lineStart}`
   start = buffer.indexOf(anchor, start)
   let end = 0
-  const ret: string[] = []
+  const ret: Array<string> = []
   while (start >= 0) {
     end = buffer.indexOf('\n', start + anchor.length)
     ret.push(buffer.toString('ascii', start + anchor.length, end).trim())
@@ -237,9 +237,9 @@ const splitOnFirst = (c: string, text: string) => {
   const p = text.indexOf(c)
   if (p < 0) {
     return [text.slice(0)]
-  } else {
+  } 
     return [text.slice(0, p), text.slice(p + 1)]
-  }
+  
 }
 
 const attributeParsers: any = {
@@ -273,14 +273,14 @@ const attributeParsers: any = {
         encodingName,
         clockrate: Number(clockrate),
       }
-    } else {
+    } 
       return {
         payloadType: Number(payloadType),
         encodingName,
         clockrate: Number(clockrate),
         encodingParameters,
       }
-    }
+    
   },
   transform: (value: string) => {
     return value.split(';').map((row) => row.split(',').map(Number))
@@ -294,13 +294,13 @@ const parseAttribute = (body: string) => {
   const [attribute, value] = splitOnFirst(':', body)
   if (value === undefined) {
     return { [attribute]: true }
-  } else {
+  } 
     if (attributeParsers[attribute] !== undefined) {
       return { [attribute]: attributeParsers[attribute](value) }
-    } else {
+    } 
       return { [attribute]: value }
-    }
-  }
+    
+  
 }
 
 const extractField = (line: string) => {

@@ -4,32 +4,32 @@ import { aacSettings } from './aacSettings'
 import { h264Settings } from './h264Settings'
 
 interface MoofMetadata {
-  trackId: number
-  timestamp: number
-  byteLength: number
+  readonly trackId: number
+  readonly timestamp: number
+  readonly byteLength: number
 }
 
 const formatDefaults: {
-  [key: string]: (
+  readonly [key: string]: (
     media: any,
     date: number,
     trackId: number,
-  ) => { mime: string; codec: any; defaultFrameDuration: number }
+  ) => { readonly mime: string; readonly codec: any; readonly defaultFrameDuration: number }
 } = {
   'MPEG4-GENERIC': aacSettings,
   H264: h264Settings,
 }
 
 interface TrackData {
-  lastTimestamp: number
-  baseMediaDecodeTime: number
-  defaultFrameDuration: number
-  clockrate: number
-  bitrate: number
-  framerate: number
-  cumulativeByteLength: number
-  cumulativeDuration: number
-  cumulativeFrames: number
+  readonly lastTimestamp: number
+  readonly baseMediaDecodeTime: number
+  readonly defaultFrameDuration: number
+  readonly clockrate: number
+  readonly bitrate: number
+  readonly framerate: number
+  readonly cumulativeByteLength: number
+  readonly cumulativeDuration: number
+  readonly cumulativeFrames: number
 }
 
 const createTrackData = (): TrackData => {
@@ -47,8 +47,8 @@ const createTrackData = (): TrackData => {
 }
 
 interface RateInfo {
-  byteLength: number
-  duration: number
+  readonly byteLength: number
+  readonly duration: number
 }
 
 const updateRateInfo = (
@@ -83,7 +83,7 @@ export class BoxBuilder {
   public trackIdMap: { [key: number]: number }
   public sequenceNumber: number
   public ntpPresentationTime: number
-  public trackData: TrackData[]
+  public trackData: Array<TrackData>
   public videoTrackId?: number
 
   constructor() {

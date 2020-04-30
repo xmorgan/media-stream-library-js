@@ -4,7 +4,7 @@ import { XmlMessage, MessageType } from '../components/message'
 import { Tube } from '../components/component'
 
 export interface Html5VideoMetadataConfig extends Html5VideoConfig {
-  metadataHandler: (msg: XmlMessage) => void
+  readonly metadataHandler: (msg: XmlMessage) => void
 }
 
 /**

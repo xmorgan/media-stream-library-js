@@ -6,10 +6,10 @@ import { WSSource } from '../components/ws-source'
 import { AuthConfig, Auth } from '../components/auth'
 
 export interface Html5VideoConfig {
-  ws?: WSConfig
-  rtsp?: RtspConfig
-  mediaElement: HTMLVideoElement
-  auth?: AuthConfig
+  readonly ws?: WSConfig
+  readonly rtsp?: RtspConfig
+  readonly mediaElement: HTMLVideoElement
+  readonly auth?: AuthConfig
 }
 
 /**
@@ -20,12 +20,12 @@ export interface Html5VideoConfig {
  * @extends {RtspMp4Pipeline}
  */
 export class Html5VideoPipeline extends RtspMp4Pipeline {
-  public onSourceOpen?: (mse: MediaSource, tracks: MediaTrack[]) => void
+  public onSourceOpen?: (mse: MediaSource, tracks: Array<MediaTrack>) => void
   public onServerClose?: () => void
   public ready: Promise<void>
 
   private _src?: WSSource
-  private _sink: MseSink
+  private readonly _sink: MseSink
 
   /**
    * Creates an instance of Html5VideoPipeline.

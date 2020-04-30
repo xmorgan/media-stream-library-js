@@ -74,9 +74,9 @@ class UInt8 extends BoxElement {
 }
 
 class UInt8Array extends BoxElement {
-  public value: number[]
+  public value: Array<number>
 
-  constructor(array: number[]) {
+  constructor(array: Array<number>) {
     super(array.length)
     this.value = array
   }
@@ -133,9 +133,9 @@ class UInt24BE extends BoxElement {
 }
 
 class UInt16BEArray extends BoxElement {
-  public value: number[]
+  public value: Array<number>
 
-  constructor(array: number[]) {
+  constructor(array: Array<number>) {
     super(array.length * 2)
     this.value = array
   }
@@ -171,9 +171,9 @@ class UInt32BE extends BoxElement {
 }
 
 class UInt32BEArray extends BoxElement {
-  public value: number[]
+  public value: Array<number>
 
-  constructor(array: number[]) {
+  constructor(array: Array<number>) {
     super(array.length * 4)
     this.value = array
   }
@@ -222,13 +222,13 @@ class UInt64BE extends BoxElement {
  */
 const createParameterSetArrayClass = function (sizeMask = 0x00) {
   return class ParameterSetArray extends BoxElement {
-    public value: any[]
+    public value: Array<any>
     /**
      * Takes an array of byte-arrays
      * @param  {array} array The array of byte arrays
      * @return {[type]}       [description]
      */
-    constructor(array: number[][]) {
+    constructor(array: Array<Array<number>>) {
       super(0)
       // this.setLengths = array.map((byteArray) => byteArray.length);
       this.value = array.reduce(
@@ -263,12 +263,12 @@ const createParameterSetArrayClass = function (sizeMask = 0x00) {
 type BoxType = 'ftyp'
 
 interface BoxSpec {
-  container?: string
-  mandatory?: boolean
-  quantity?: string
-  box: 'Box' | 'FullBox' | 'None'
-  body?: Array<[string, any, any?]>
-  config?: any
+  readonly container?: string
+  readonly mandatory?: boolean
+  readonly quantity?: string
+  readonly box: 'Box' | 'FullBox' | 'None'
+  readonly body?: ReadonlyArray<readonly [string, any, any?]>
+  readonly config?: any
 }
 
 /**
@@ -284,7 +284,7 @@ interface BoxSpec {
  * The values assigned to each element in the spec are used as default.
  */
 
-const BOXSPEC: { [key: string]: BoxSpec } = {
+const BOXSPEC: { readonly [key: string]: BoxSpec } = {
   // File Type Box
   ftyp: {
     container: 'file',
@@ -1165,15 +1165,15 @@ export class Box extends BoxElement {
    * @return {undefined}
    */
   format(indent = 0) {
-    const lines = [' '.repeat(indent) + `[${this.type}] (${this.byteLength})`]
+    const lines = [`${' '.repeat(indent)  }[${this.type}] (${this.byteLength})`]
     for (const [key, entry] of this.struct) {
       const element = entry.element
       if (element.format !== undefined) {
         lines.push(element.format(indent + 2))
       } else {
         lines.push(
-          ' '.repeat(indent + 2) +
-            `${key} = ${element.value} (${element.byteLength})`,
+          `${' '.repeat(indent + 2) 
+            }${key} = ${element.value} (${element.byteLength})`,
         )
       }
     }
@@ -1204,7 +1204,7 @@ export class Container extends Box {
    * @param  {Object} config Configuration holding (key: value) fields
    * @param  {Box} boxes  One or more boxes to append.
    */
-  constructor(type: string, config?: { [key: string]: any }, ...boxes: Box[]) {
+  constructor(type: string, config?: { [key: string]: any }, ...boxes: Array<Box>) {
     super(type, config)
     this.boxSize = 0
     this.append(...boxes)
@@ -1215,7 +1215,7 @@ export class Container extends Box {
    * @param {Box} boxes The box(es) to append
    * @return {Box} this container, so that add can be used in a chain
    */
-  append(...boxes: Box[]) {
+  append(...boxes: Array<Box>) {
     for (const box of boxes) {
       this.add(`box_${this.boxSize++}`, box)
     }

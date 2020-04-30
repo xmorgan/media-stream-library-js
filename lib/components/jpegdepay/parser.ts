@@ -47,9 +47,9 @@ export function jpegDepayFactory(defaultWidth = 0, defaultHeight = 0) {
   const HUFFMAN_HEADER = makeHuffmanHeader()
   const SCAN_HEADER = makeScanHeader()
 
-  return function jpegDepay(packets: Buffer[]) {
+  return function jpegDepay(packets: Array<Buffer>) {
     let metadata
-    const fragments: Buffer[] = []
+    const fragments: Array<Buffer> = []
     for (const packet of packets) {
       let fragment = payload(packet)
 

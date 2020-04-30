@@ -6,8 +6,8 @@ import { AuthConfig, Auth } from '../components/auth'
 import { Sink } from '../components/component'
 
 interface RtspAuthConfig {
-  rtsp?: RtspConfig
-  auth?: AuthConfig
+  readonly rtsp?: RtspConfig
+  readonly auth?: AuthConfig
 }
 
 export class CliMp4Pipeline extends RtspMp4Pipeline {

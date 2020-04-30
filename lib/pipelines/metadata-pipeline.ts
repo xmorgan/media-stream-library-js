@@ -12,9 +12,9 @@ const DEFAULT_RTSP_PARAMETERS = {
 }
 
 export interface WsRtspMetadataConfig {
-  ws?: WSConfig
-  rtsp?: RtspConfig
-  metadataHandler: (msg: XmlMessage) => void
+  readonly ws?: WSConfig
+  readonly rtsp?: RtspConfig
+  readonly metadataHandler: (msg: XmlMessage) => void
 }
 
 /**

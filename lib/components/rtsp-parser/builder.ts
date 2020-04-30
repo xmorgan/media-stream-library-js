@@ -13,7 +13,7 @@ export const builder = (msg: RtspMessage): Buffer => {
   const messageString = [
     `${msg.method} ${msg.uri} ${protocol}`,
     Object.entries(headers)
-      .map(([key, value]) => key + ': ' + value)
+      .map(([key, value]) => `${key  }: ${  value}`)
       .join('\r\n'),
     '\r\n',
   ].join('\r\n')

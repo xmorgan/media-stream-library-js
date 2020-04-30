@@ -13,9 +13,9 @@ interface BlobMessage {
 type BlobMessageHandler = (msg: BlobMessage) => void
 
 interface RateInfo {
-  bitrate: number
-  framerate: number
-  renderedFrames: number
+  readonly bitrate: number
+  readonly framerate: number
+  readonly renderedFrames: number
 }
 
 const resetInfo = (info: RateInfo) => {
@@ -25,8 +25,8 @@ const resetInfo = (info: RateInfo) => {
 }
 
 interface ByteDuration {
-  byteLength: number
-  duration: number
+  readonly byteLength: number
+  readonly duration: number
 }
 
 const generateUpdateInfo = (clockrate: number) => {
@@ -76,9 +76,9 @@ const generateUpdateInfo = (clockrate: number) => {
 export class CanvasSink extends Sink {
   public onCanplay?: () => void
   public onSync?: (ntpPresentationTime: number) => void
-  private _clock: Clock
-  private _scheduler: Scheduler<BlobMessage>
-  private _info: RateInfo
+  private readonly _clock: Clock
+  private readonly _scheduler: Scheduler<BlobMessage>
+  private readonly _info: RateInfo
   /**
    * Creates an instance of CanvasComponent.
    * @param { HTMLCanvasElement } el - An HTML < canvas > element
@@ -249,7 +249,7 @@ export class CanvasSink extends Sink {
     // Set up an outgoing stream.
     const outgoing = new Readable({
       objectMode: true,
-      read: function () {
+      read () {
         //
       },
     })

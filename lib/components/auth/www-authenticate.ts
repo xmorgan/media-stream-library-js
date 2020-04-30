@@ -1,8 +1,8 @@
-export type ChallengeParams = Map<string, string>
+export type ChallengeParams = ReadonlyMap<string, string>
 
 export interface Challenge {
-  type: string
-  params: ChallengeParams
+  readonly type: string
+  readonly params: ChallengeParams
 }
 
 export const parseWWWAuthenticate = (header: string): Challenge => {

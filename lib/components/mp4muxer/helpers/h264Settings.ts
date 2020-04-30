@@ -3,7 +3,7 @@ import { base64DecToArr } from './utils'
 import { Box, Container } from './isom'
 import { SPSParser } from './spsparser'
 
-const PROFILE_NAMES: { [key: number]: string } = {
+const PROFILE_NAMES: { readonly [key: number]: string } = {
   66: 'Baseline',
   77: 'Main',
   100: 'High',

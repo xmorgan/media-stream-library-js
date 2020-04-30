@@ -5,9 +5,9 @@ import { AuthConfig, Auth } from '../components/auth'
 import { RtspPipeline } from './rtsp-pipeline'
 
 export interface TransformConfig {
-  ws?: WSConfig
-  rtsp?: RtspConfig
-  auth?: AuthConfig
+  readonly ws?: WSConfig
+  readonly rtsp?: RtspConfig
+  readonly auth?: AuthConfig
 }
 
 /**

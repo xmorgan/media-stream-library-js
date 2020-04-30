@@ -21,9 +21,9 @@ const INTERLEAVED_HEADER_BYTES = 4
 const ASCII_DOLLAR = 0x24
 
 interface RtpPacketInfo {
-  channel: number
-  begin: number
-  end: number
+  readonly channel: number
+  readonly begin: number
+  readonly end: number
 }
 
 /**
@@ -32,7 +32,7 @@ interface RtpPacketInfo {
  * @param  {Array} chunks Buffers constituting the data.
  * @return {Object}       Packet information (channel, begin, end).
  */
-const rtpPacketInfo = (chunks: Buffer[]): RtpPacketInfo => {
+const rtpPacketInfo = (chunks: ReadonlyArray<Buffer>): RtpPacketInfo => {
   const header = Buffer.alloc(INTERLEAVED_HEADER_BYTES)
   let i = 0
   let bytesRead = 0
@@ -59,7 +59,7 @@ const rtpPacketInfo = (chunks: Buffer[]): RtpPacketInfo => {
  * @type {[type]}
  */
 export class Parser {
-  private _chunks: Buffer[] = []
+  private _chunks: Array<Buffer> = []
   private _length = 0
   private _state: STATE = STATE.IDLE
   private _packet?: RtpPacketInfo

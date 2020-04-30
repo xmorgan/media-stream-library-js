@@ -178,7 +178,7 @@ export const bodyOffset = (chunk: Buffer) => {
     return bodyOffsets.reduce((acc, offset) => {
       return Math.min(acc, offset)
     })
-  } else {
+  } 
     return -1
-  }
+  
 }

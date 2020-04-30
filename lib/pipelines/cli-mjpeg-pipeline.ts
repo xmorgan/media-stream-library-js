@@ -6,8 +6,8 @@ import { Sink } from '../components/component'
 import { RtspConfig } from '../components/rtsp-session'
 
 interface RtspAuthConfig {
-  rtsp?: RtspConfig
-  auth?: AuthConfig
+  readonly rtsp?: RtspConfig
+  readonly auth?: AuthConfig
 }
 
 export class CliMjpegPipeline extends RtspMjpegPipeline {

@@ -9,8 +9,8 @@ import { parseWWWAuthenticate } from './www-authenticate'
 const UNAUTHORIZED = 401
 
 export interface AuthConfig {
-  username?: string
-  password?: string
+  readonly username?: string
+  readonly password?: string
 }
 
 const DEFAULT_CONFIG = {
@@ -65,7 +65,7 @@ export class Auth extends Tube {
         const challenge = parseWWWAuthenticate(wwwAuth)
         if (challenge.type === 'basic') {
           authHeader =
-            'Basic ' + Buffer.from(username + ':' + password).toString('base64')
+            `Basic ${  Buffer.from(`${username  }:${  password}`).toString('base64')}`
         } else if (challenge.type === 'digest') {
           const digest = new DigestAuth(challenge.params, username, password)
           authHeader = digest.authorization(

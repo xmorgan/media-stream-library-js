@@ -2,13 +2,13 @@ import { AACMedia } from '../../../utils/protocols/sdp'
 import { Box, Container } from './isom'
 
 // All audio object types defined in ISO/IEC 14496-3 pp. 40
-const AUDIO_OBJECT_TYPE_NAMES: { [key: number]: string } = {
+const AUDIO_OBJECT_TYPE_NAMES: { readonly [key: number]: string } = {
   1: 'AAC Main',
   2: 'AAC LC',
 }
 
 // All frequencies defined in ISO/IEC 14496-3 pp. 42
-const FREQUENCY_VALUES: { [key: number]: string } = {
+const FREQUENCY_VALUES: { readonly [key: number]: string } = {
   0: '96 kHz',
   1: '88.2 kHz',
   2: '64 kHz',
@@ -25,15 +25,15 @@ const FREQUENCY_VALUES: { [key: number]: string } = {
 }
 
 // All channels defined in ISO/IEC 14496-3 pp. 42
-const CHANNEL_CONFIG_NAMES: { [key: number]: string } = {
+const CHANNEL_CONFIG_NAMES: { readonly [key: number]: string } = {
   1: 'Mono',
   2: 'Stereo',
 }
 
 export interface AACEncoding {
-  coding: string
-  samplingRate: string
-  channels: string
+  readonly coding: string
+  readonly samplingRate: string
+  readonly channels: string
 }
 
 const aacEncodingName = (audioConfigBytes: number): AACEncoding => {
@@ -127,7 +127,7 @@ export const aacSettings = (media: AACMedia, date: number, trackId: number) => {
         samplerate: (media.rtpmap.clockrate << 16) >>> 0, // FIXME: Is this  correct?
       },
       new Box('esds', {
-        audioConfigBytes: audioConfigBytes, // Converting from hex string to int
+        audioConfigBytes, // Converting from hex string to int
         maxBitRate: bitrate,
         avgBitRate: bitrate,
       }),

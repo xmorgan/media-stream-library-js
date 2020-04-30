@@ -51,9 +51,9 @@ export class Clock {
   public now() {
     if (this.stopped) {
       return this.elapsed
-    } else {
+    } 
       return this.elapsed + (window.performance.now() - this.started)
-    }
+    
   }
 
   public play() {

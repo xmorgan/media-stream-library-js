@@ -8,14 +8,14 @@ import { payloadType, timestamp, marker } from '../../utils/protocols/rtp'
 export class JPEGDepay extends Tube {
   constructor() {
     let jpegPayloadType: number
-    let packets: Buffer[] = []
+    let packets: Array<Buffer> = []
     let jpegDepay: (
-      packets: Buffer[],
+      packets: Array<Buffer>,
     ) => { size: { width: number; height: number }; data: Buffer }
 
     const incoming = new Transform({
       objectMode: true,
-      transform: function (msg: Message, encoding, callback) {
+      transform (msg: Message, encoding, callback) {
         if (msg.type === MessageType.SDP) {
           const jpegMedia = msg.sdp.media.find((media): media is VideoMedia => {
             return (

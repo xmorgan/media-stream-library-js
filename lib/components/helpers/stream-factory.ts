@@ -37,7 +37,7 @@ export default class StreamFactory {
    * Creates a readable stream that sends a message for each element of an array.
    * @param {Array} arr  The array with elements to be turned into a stream.
    */
-  public static producer(messages?: any[]) {
+  public static producer(messages?: Array<any>) {
     let counter = 0
     return new Readable({
       objectMode: true,
@@ -74,7 +74,7 @@ export default class StreamFactory {
    * Yield binary messages from JSON packet array until depleted.
    * @return {Generator} Returns a JSON packet iterator.
    */
-  public static replayer(packets: any[]) {
+  public static replayer(packets: Array<any>) {
     let packetCounter = 0
     let lastTimestamp = packets[0].timestamp
     return new Readable({

@@ -1,5 +1,5 @@
 export interface ConfigOptions {
-  [key: string]: any
+  readonly [key: string]: any
 }
 
 /**

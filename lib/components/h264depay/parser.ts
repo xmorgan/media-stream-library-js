@@ -64,15 +64,15 @@ export class H264DepayParser {
           timestamp: timestamp(rtp.data),
           ntpTimestamp: rtp.ntpTimestamp,
           payloadType: payloadType(rtp.data),
-          nalType: nalType,
+          nalType,
         }
         this._buffer = Buffer.alloc(0)
         return msg
-      } else {
+      } 
         // Put the received data on the buffer and cut the header bytes
         this._buffer = Buffer.concat([this._buffer, rtpPayload.slice(2)])
         return null
-      }
+      
     } else if (
       (type === NAL_TYPES.NON_IDR_PICTURE || type === NAL_TYPES.IDR_PICTURE) &&
       this._buffer.length === 0
@@ -92,12 +92,12 @@ export class H264DepayParser {
       }
       this._buffer = Buffer.alloc(0)
       return msg
-    } else {
+    } 
       h264Debug(
         `H264depayComponent can only extract types 1,5 and 28, got ${type}`,
       )
       this._buffer = Buffer.alloc(0)
       return null
-    }
+    
   }
 }

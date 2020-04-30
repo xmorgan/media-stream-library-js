@@ -46,25 +46,25 @@ export enum RTSP_METHOD {
 const MIN_SESSION_TIMEOUT = 5 // minimum timeout for a rtsp session in seconds
 
 interface Headers {
-  [key: string]: string
+  readonly [key: string]: string
 }
 
 interface Command {
-  method: RTSP_METHOD
-  headers?: Headers
-  uri?: string
+  readonly method: RTSP_METHOD
+  readonly headers?: Headers
+  readonly uri?: string
 }
 
 interface MethodHeaders {
-  [key: string]: Headers
+  readonly [key: string]: Headers
 }
 
 export interface RtspConfig {
-  hostname?: string
-  parameters?: string[]
-  uri?: string
-  headers?: MethodHeaders
-  defaultHeaders?: Headers
+  readonly hostname?: string
+  readonly parameters?: ReadonlyArray<string>
+  readonly uri?: string
+  readonly headers?: MethodHeaders
+  readonly defaultHeaders?: Headers
 }
 
 // Default RTSP configuration
@@ -72,7 +72,7 @@ const defaultConfig = (
   hostname: string = typeof window === 'undefined'
     ? ''
     : window.location.hostname,
-  parameters: string[] = [],
+  parameters: ReadonlyArray<string> = [],
 ): RtspConfig => {
   const uri =
     parameters.length > 0
@@ -106,13 +106,13 @@ export class RtspSession extends Tube {
 
   public onSdp?: (sdp: Sdp) => void
   public onError?: (err: Error) => void
-  public onPlay?: (range?: string[]) => void
+  public onPlay?: (range?: Array<string>) => void
 
   private _outgoingClosed: boolean
   private _sequence?: number
   private _retry?: () => void
-  private _callStack?: Command[]
-  private _callHistory?: any[]
+  private _callStack?: Array<Command>
+  private _callHistory?: Array<any>
   private _state?: STATE
   private _waiting?: boolean
   private _contentBase?: string | null
@@ -353,7 +353,7 @@ export class RtspSession extends Tube {
       this._enqueue({
         method: RTSP_METHOD.SETUP,
         headers: {
-          Transport: 'RTP/AVP/TCP;unicast;interleaved=' + rtp + '-' + rtcp,
+          Transport: `RTP/AVP/TCP;unicast;interleaved=${  rtp  }-${  rtcp}`,
         },
         uri,
       })
